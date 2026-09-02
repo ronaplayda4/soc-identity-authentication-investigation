@@ -1,35 +1,35 @@
-# SOC Identity Authentication Investigation
+## Investigation Evidence
 
-## Overview
+### 1. Focused KQL Investigation Query
 
-This project documents a Microsoft Sentinel and Defender XDR identity investigation involving multiple non-success sign-in events followed by successful authentication.
+This focused `SigninLogs` query reproduced the alert conditions and exposed the individual non-success authentication events included in the detection.
 
-The alert initially suggested possible brute-force or credential-stuffing activity. Examination of the underlying Microsoft Entra sign-in records showed that the events consisted primarily of MFA requirements, an invalid session, and incomplete strong-authentication attempts.
+![Focused KQL investigation query](01-focused-kql-query.png)
 
-## Investigation Outcome
+### 2. Authentication Results
 
-- **Alert severity:** Medium
-- **Data source:** Microsoft Sentinel / Defender XDR
-- **Category:** Credential Access
-- **MITRE ATT&CK mapping:** T1110 — Brute Force
-- **Final disposition:** Benign
-- **Containment required:** No
+Six qualifying non-success events were identified. The results included MFA requirements, an invalid session, and incomplete strong-authentication attempts.
 
-## Skills Demonstrated
+![Authentication results](02-authentication-results.png)
 
-- Microsoft Sentinel and Defender XDR investigation
-- KQL querying and event correlation
-- Microsoft Entra sign-in analysis
-- Authentication result-code interpretation
-- Timeline and Five-W analysis
-- Detection-engineering recommendations
-- AI triage quality-control review
-- Evidence sanitization for public reporting
+### 3. Device Details
 
-## Report
+The device context showed consistent Windows and Chrome activity. The device ID was empty, and the endpoint was unmanaged and noncompliant.
 
-[Download the complete investigation report](SOC_Identity_Authentication_Investigation_Portfolio_Rona_Playda.docx)
+![Device details](03-device-details.png)
+
+### 4. Seven-Day Account Baseline
+
+The seven-day baseline showed Windows/Chrome and Android authentication-broker activity originating from the same sanitized public IP address and US location.
+
+![Seven-day account baseline](04-seven-day-baseline.png)
+
+## Full Investigation Report
+
+For the complete methodology, timeline, Five-W analysis, verdict, recommendations, and reusable KQL queries:
+
+[Download the complete sanitized investigation report](SOC_Identity_Authentication_Investigation_Portfolio_Rona_Playda.docx)
 
 ## Privacy Notice
 
-Account names, public IP addresses, tenant identifiers, correlation IDs, and subscription details have been masked. The investigation was conducted in an authorized SOC training environment.
+Account names, public IP addresses, tenant identifiers, correlation IDs, and subscription details have been masked. This investigation was performed in an authorized SOC training environment.
